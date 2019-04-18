@@ -48,6 +48,10 @@ class JsonApiEncoder extends AbstractEncoder
         $this->fractal = $fractal ?? new Manager();
         $this->fractal->setSerializer(new JsonApiSerializer());
 
+        if ($request !== null) {
+            $this->fractal->parseIncludes($request->getQueryParams()['include'] ?? []);
+        }
+
         $this->jsonApiConverter = $jsonApiConverter ?? new JsonApiConverter();
     }
 
